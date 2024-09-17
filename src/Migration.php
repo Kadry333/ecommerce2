@@ -1,7 +1,7 @@
+
 <?php
 // Initialize database and create tables
 require_once 'Database.php';
-
 $db = new DataBase();
 
 // SQL to create tables
@@ -24,14 +24,15 @@ CREATE TABLE IF NOT EXISTS categories (
 CREATE TABLE IF NOT EXISTS products (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
+    subtitle VARCHAR(100) NOT NULL,
     description TEXT,
-    price DECIMAL(10,2) NOT NULL,
-    category_id INT,
+    price INT NOT NULL,
+    price_after_sale INT,
     image VARCHAR(255),
-    is_index BOOLEAN DEFAULT 0,
     rating SMALLINT NOT NULL DEFAULT 0,
     review SMALLINT NOT NULL DEFAULT 0,
-    FOREIGN KEY (category_id) REFERENCES categories(id)
+    styles VARCHAR(100) NOT NULL,
+    properties VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS messages (
@@ -47,6 +48,7 @@ CREATE TABLE IF NOT EXISTS blogs (
     title VARCHAR(100) NOT NULL,
     content TEXT,
     author_id INT,
+    author_name VARCHAR(100),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     image VARCHAR(255),
     FOREIGN KEY (author_id) REFERENCES users(id)
@@ -59,6 +61,16 @@ CREATE TABLE IF NOT EXISTS slider (
     description TEXT,
     link VARCHAR(255)
 );
+CREATE TABLE IF NOT EXISTS users_opinion(
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    position VARCHAR(100) NOT NULL,
+    opinion TEXT,
+    image VARCHAR(50)
+);
+
+
+
 
 CREATE TABLE IF NOT EXISTS settings (
     `id` INT AUTO_INCREMENT PRIMARY KEY,

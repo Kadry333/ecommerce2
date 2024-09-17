@@ -1,16 +1,24 @@
 <?php require_once Root_Path.'inc/header.php';?>
 <?php require_once Root_Path.'inc/nav.php';?>
+<?php require_once Root_Path.'src/DB_Actions/slider.php';?>
+<?php require_once Root_Path.'src/DB_Actions/Products.php';?>
+<?php require_once Root_Path.'src/DB_Actions/Blogs.php';?>
+<?php require_once Root_Path.'src/DB_Actions/Users_Opinion.php';?>
 <?php
-$slider_db = new DataBase();
-$conn = $slider_db->getConnection();
-$sql = "SELECT * FROM `slider`";
+$product_db = new DataBase();
+$conn = $product_db->getConnection();
+$product = new Product($conn);
+$slider = new Slider($conn);
+$blog = new Blog($conn);
+$opinion = new Users_Opinion($conn);
+
 ?>
 
     <!--slider area start-->
     <section class="slider_section d-flex align-items-center" data-bgimg="assets/img/slider/slider3.jpg">
         <div class="slider_area owl-carousel">
-        <?php $res = mysqli_query($conn,$sql);
-                    while($row = mysqli_fetch_assoc($res)):?>
+        <?php $slider_res = $slider->readAll();
+                    while($slider_row = mysqli_fetch_assoc($slider_res)):?>
             <div class="single_slider d-flex align-items-center">
            
                 <div class="container">
@@ -18,15 +26,15 @@ $sql = "SELECT * FROM `slider`";
                     <div class="row">
                         <div class="col-xl-6 col-md-6">
                             <div class="slider_content">
-                                <h1><?php echo $row['title'];?></h1>
-                                <h2><?php echo $row['description'];?></h2>
-                                <p><?php echo $row['link'];?></p>
+                                <h1><?php echo $slider_row['title'];?></h1>
+                                <h2><?php echo $slider_row['description'];?></h2>
+                                <p><?php echo $slider_row['link'];?></p>
                                 <a class="button" href="product-details.html">Buy now</a>
                             </div>
                         </div>
                         <div class="col-xl-6 col-md-6">
                             <div class="slider_content">
-                                <img src="assets/img/product/1.png" alt="">
+                                <img src=<?php echo Base_Url . "public/images/slider/" . $slider_row['image'];?> alt="">
                             </div>
                         </div>
                     </div>
@@ -41,75 +49,44 @@ $sql = "SELECT * FROM `slider`";
 
     <!--Tranding product-->
     <section class="pt-60 pb-30 gray-bg">
-        <div class="container">
-            <div class="row">
-                <div class="col text-center">
-                    <div class="section-title">
-                        <h2>Tranding Products</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
-                    <div class="single-tranding">
-                        <a href="product-details.html">
-                            <div class="tranding-pro-img">
-                                <img src="assets/img/product/tranding-1.jpg" alt="">
-                            </div>
-                            <div class="tranding-pro-title">
-                                <h3>Meyoji Robast Drone</h3>
-                                <h4>Drone</h4>
-                            </div>
-                            <div class="tranding-pro-price">
-                                <div class="price_box">
-                                    <span class="current_price">$70.00</span>
-                                    <span class="old_price">$80.00</span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
-                    <div class="single-tranding">
-                        <a href="product-details.html">
-                            <div class="tranding-pro-img">
-                                <img src="assets/img/product/tranding-2.jpg" alt="">
-                            </div>
-                            <div class="tranding-pro-title">
-                                <h3>Ut praesentium earum</h3>
-                                <h4>Mevrik</h4>
-                            </div>
-                            <div class="tranding-pro-price">
-                                <div class="price_box">
-                                    <span class="current_price">$70.00</span>
-                                    <span class="old_price">$80.00</span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
-                    <div class="single-tranding">
-                        <a href="product-details.html">
-                            <div class="tranding-pro-img">
-                                <img src="assets/img/product/tranding-3.jpg" alt="">
-                            </div>
-                            <div class="tranding-pro-title">
-                                <h3>Consectetur adipisicing</h3>
-                                <h4>Flyer</h4>
-                            </div>
-                            <div class="tranding-pro-price">
-                                <div class="price_box">
-                                    <span class="current_price">$70.00</span>
-                                    <span class="old_price">$80.00</span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <div class="section-title">
+                    <h2>Trending Products</h2>
                 </div>
             </div>
         </div>
-    </section><!--Tranding product-->
+        <div class="row justify-content-center">
+            <?php $product_res = $product->readAll();?>
+            <?php $i=0;?>
+            <?php while($product_row = mysqli_fetch_assoc($product_res)):?>
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="single-tranding">
+                    <a href=<?php echo url("product-details&id=") . $product_row['id'];?>>
+                        <div class="tranding-pro-img">
+                            <img src=<?php echo Base_Url . "public/images/products/" . $product_row['image'];?> alt="">
+                        </div>
+                        <div class="tranding-pro-title">
+                            <h3><?php echo $product_row['name'];?></h3>
+                            <h4><?php echo $product_row['subtitle'];?></h4>
+                        </div>
+                        <div class="tranding-pro-price">
+                            <div class="price_box">
+                                <span class="current_price">$<?php echo $product_row['price_after_sale'];?></span>
+                                <span class="old_price">$<?php echo $product_row['price'];?></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <?php $i++;?>
+            <?php if($i==3){break;}?>
+            <?php endwhile;?>
+        </div>
+    </div>
+</section><!--Trending product-->
+<!--Tranding product-->
 
     <!--Features area-->
     <section class="features-area pt-60 pb-60">
@@ -243,22 +220,25 @@ $sql = "SELECT * FROM `slider`";
                 <div class="col-lg-6 col-md-6">
                     <div class="product_d_right">
                         <form action="#">
-                            
-                            <h1>Meyoji Robast Drone Fusce ultricies massa</h1>
+                            <?php $id = rand(1,3);?>
+                            <?php $single_product = $product->read($id);?>
+                            <?php $row_single_product = mysqli_fetch_assoc($single_product);?>    
+                            <h1><a href="<?php echo url("product-details&id=").$row_single_product['id']; ?>">
+                            <?php echo $row_single_product['name']; ?>
+                            </a></h1>
+
+                            <a href=<?php echo url("product-details&id=").$product_row['id'];?>>
                             <div class=" product_ratting">
                                 <ul>
-                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="review"><a href="#"> (250 reviews) </a></li>
+                                    <?php echo str_repeat('<i class="text-warning fa fa-star"></i>',$row_single_product['rating']);?>
+                                    <?php echo str_repeat('<i class="text-muted fa fa-star"></i>',5-$row_single_product['rating']);?>
+                                    <li class="review"><a href="#"> <?php echo $row_single_product['review'];?> reviews </a></li>
                                 </ul>
                                 
                             </div>
                             <div class="price_box">
-                                <span class="current_price">$70.00</span>
-                                <span class="old_price">$80.00</span>                                
+                                <span class="current_price">$<?php echo $row_single_product['price_after_sale'];?></span>
+                                <span class="old_price">$<?php echo $row_single_product['price'];?></span>                                
                             </div>
                             <div class="product_desc">
                                 <ul>
@@ -266,39 +246,34 @@ $sql = "SELECT * FROM `slider`";
                                     <li>Free delivery available*</li>
                                     <li>Sale 30% Off Use Code : 'Drophut'</li>
                                 </ul>
-                                <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will</p>
+                                <p><?php echo $row_single_product['description'];?></p>
                             </div>
                             <div class="product_timing">
-                                <div data-countdown="2021/6/28"></div>
-                            </div>
-                            <div class="product_variant color">
-                                <h3>Available Options</h3>
-                                <label>color</label>
-                                <ul>
-                                    <li class="color1"><a href="#"></a></li>
-                                    <li class="color2"><a href="#"></a></li>
-                                    <li class="color3"><a href="#"></a></li>
-                                    <li class="color4"><a href="#"></a></li>
-                                </ul>
+                                <div data-countdown="2025/6/28"></div>
                             </div>
                             <div class="product_variant quantity">
                                 <label>quantity</label>
                                 <input min="1" max="100" value="1" type="number">
-                                <button class="button" type="submit">Buy now</button>  
+                                <button class="button" type="submit">add to cart</button>  
                                 
                             </div>
-                            <div class="product_meta">
-                                <span>Category: <a href="#">Drone</a></span>
+                            <div class=" product_d_action">
+                               <ul>
+                                   <li><a href="#" title="Add to wishlist">+ Add to Wishlist</a></li>
+                                   <li><a href="#" title="Add to wishlist">+ Compare</a></li>
+                               </ul>
                             </div>
+                          
+                            
                             
                         </form>
                         <div class="priduct_social">
                             <ul>
-                                <li><a class="facebook" href="#" title="facebook"><i class="fa fa-facebook"></i> Like</a></li>           
-                                <li><a class="twitter" href="#" title="twitter"><i class="fa fa-twitter"></i> tweet</a></li>           
-                                <li><a class="pinterest" href="#" title="pinterest"><i class="fa fa-pinterest"></i> save</a></li>           
-                                <li><a class="google-plus" href="#" title="google +"><i class="fa fa-google-plus"></i> share</a></li>        
-                                <li><a class="linkedin" href="#" title="linkedin"><i class="fa fa-linkedin"></i> linked</a></li>        
+                                <li><a class="facebook" href="https://www.facebook.com/" title="facebook"><i class="fa fa-facebook"></i> Like</a></li>           
+                                <li><a class="twitter" href="https://www.twitter.com/" title="twitter"><i class="fa fa-twitter"></i> tweet</a></li>           
+                                <li><a class="pinterest" href="https://www.pinterest.com/" title="pinterest"><i class="fa fa-pinterest"></i> save</a></li>           
+                                <li><a class="google-plus" href="https://www.google.com/" title="google +"><i class="fa fa-google-plus"></i> share</a></li>        
+                                <li><a class="linkedin" href="https://www.linkedin.com/" title="linkedin"><i class="fa fa-linkedin"></i> linked</a></li>        
                             </ul>      
                         </div>
 
@@ -309,24 +284,8 @@ $sql = "SELECT * FROM `slider`";
     </div>
     <!--product details end-->
 
-    
-    <!--area-->
-    <section class="pt-60 pb-60 gray-bg">
-        <div class="container">
-            <div class="row">
-                <div class="col text-center">
-                    <div class="section-title">
-                        <h2>Watch it now</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
-                    <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/136938394?color=FA5252&amp;title=0&amp;byline=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" allow="autoplay; fullscreen" allowfullscreen></iframe></div><script src="../../../player.vimeo.com/api/player.js"></script>
-                </div>
-            </div>
-        </div>
-    </section><!--area-->
+
+
 
     
     <!--Other product-->
@@ -340,64 +299,33 @@ $sql = "SELECT * FROM `slider`";
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
-                    <div class="single-tranding mb-30">
-                        <a href="product-details.html">
-                            <div class="tranding-pro-img">
-                                <img src="assets/img/product/tranding-1.jpg" alt="">
+            <?php $product_res = $product->readAll();?>
+            <?php $i=0;?>
+            <?php while($product_row = mysqli_fetch_assoc($product_res)):?>
+                <?php if($i<3){$i++;continue;}?>
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="single-tranding">
+                    <a href=<?php echo url("product-details&id=").$product_row['id'];?>>
+                        <div class="tranding-pro-img">
+                            <img src=<?php echo Base_Url . "public/images/products/" . $product_row['image'];?> alt="">
+                        </div>
+                        <div class="tranding-pro-title">
+                            <h3><?php echo $product_row['name'];?></h3>
+                            <h4><?php echo $product_row['subtitle'];?></h4>
+                        </div>
+                        <div class="tranding-pro-price">
+                            <div class="price_box">
+                                <span class="current_price">$<?php echo $product_row['price_after_sale'];?></span>
+                                <span class="old_price">$<?php echo $product_row['price'];?></span>
                             </div>
-                            <div class="tranding-pro-title">
-                                <h3>Meyoji Robast Drone</h3>
-                                <h4>Drone</h4>
-                            </div>
-                            <div class="tranding-pro-price">
-                                <div class="price_box">
-                                    <span class="current_price">$70.00</span>
-                                    <span class="old_price">$80.00</span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
-                    <div class="single-tranding mb-30">
-                        <a href="product-details.html">
-                            <div class="tranding-pro-img">
-                                <img src="assets/img/product/tranding-2.jpg" alt="">
-                            </div>
-                            <div class="tranding-pro-title">
-                                <h3>Ut praesentium earum</h3>
-                                <h4>Mevrik</h4>
-                            </div>
-                            <div class="tranding-pro-price">
-                                <div class="price_box">
-                                    <span class="current_price">$70.00</span>
-                                    <span class="old_price">$80.00</span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
-                    <div class="single-tranding mb-30">
-                        <a href="product-details.html">
-                            <div class="tranding-pro-img">
-                                <img src="assets/img/product/tranding-3.jpg" alt="">
-                            </div>
-                            <div class="tranding-pro-title">
-                                <h3>Consectetur adipisicing</h3>
-                                <h4>Flyer</h4>
-                            </div>
-                            <div class="tranding-pro-price">
-                                <div class="price_box">
-                                    <span class="current_price">$70.00</span>
-                                    <span class="old_price">$80.00</span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                        </div>
+                    </a>
                 </div>
             </div>
+            
+            <?php endwhile;?>
+        </div>
+    </div>
         </div>
     </section><!--Other product-->
 
@@ -407,43 +335,24 @@ $sql = "SELECT * FROM `slider`";
             <div class="row justify-content-center">
                 <div class="col-xl-10">
                     <div class="testimonial_are">
-                        <div class="testimonial_active owl-carousel">       
+                        <div class="testimonial_active owl-carousel">   
+                          <?php $opinion_res = $opinion->readAll();?>
+                          <?php while($opinion_row = mysqli_fetch_assoc($opinion_res)):?>
                             <article class="single_testimonial">
                                 <figure>
                                     <div class="testimonial_thumb">
-                                        <a href="#"><img src="assets/img/about/team-3.jpg" alt=""></a>
+                                        <a href="#"><img src=<?php echo Base_Url . "public/images/users/" . $opinion_row['image'];?> alt=""></a>
                                     </div>
                                     <figcaption class="testimonial_content">
-                                        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45</p>
-                                        <h3><a href="#">Kathy Young</a><span> - CEO of SunPark</span></h3>
+                                        <p><?php echo $opinion_row['opinion'];?></p>
+                                        <h3><a href="#"><?php echo $opinion_row['name'];?></a><span> - <?php echo $opinion_row['position'];?></span></h3>
                                     </figcaption>
                                     
                                 </figure>
                             </article> 
-                            <article class="single_testimonial">
-                                <figure>
-                                    <div class="testimonial_thumb">
-                                        <a href="#"><img src="assets/img/about/team-1.jpg" alt=""></a>
-                                    </div>
-                                    <figcaption class="testimonial_content">
-                                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even</p>
-                                        <h3><a href="#">John Sullivan</a><span> - Customer</span></h3>
-                                    </figcaption>
-                                    
-                                </figure>
-                            </article> 
-                            <article class="single_testimonial">
-                                <figure>
-                                    <div class="testimonial_thumb">
-                                        <a href="#"><img src="assets/img/about/team-2.jpg" alt=""></a>
-                                    </div>
-                                    <figcaption class="testimonial_content">
-                                        <p>College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites</p>
-                                        <h3><a href="#">Jenifer Brown</a><span> - Manager of AZ</span></h3>
-                                    </figcaption>
-                                    
-                                </figure>
-                            </article>      
+                            <?php endwhile;?>
+                         
+                           
                         </div>   
                     </div>
                 </div>
@@ -462,72 +371,32 @@ $sql = "SELECT * FROM `slider`";
                 </div>
             </div>
             <div class="row blog_wrapper">
+                <?php $blog_res = $blog->readAll();?>
+                <?php while($blog_row = mysqli_fetch_assoc($blog_res)):?>
                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                     <article class="single_blog mb-60">
                         <figure>
                             <div class="blog_thumb">
-                                <a href="blog-details.html"><img src="assets/img/blog/blog2.jpg" alt=""></a>
+                                <a href=<?php echo url("blog-details&id=") . $blog_row['id'];?>><img src=<?php echo Base_Url . "public/images/blogs/" . $blog_row['image'];?> alt=""></a>
                             </div>
                             <figcaption class="blog_content">
-                                <h3><a href="blog-details.html">How to start drone</a></h3>
+                                <h3><a href="blog-details.html"><?php echo $blog_row['title'];?></a></h3>
                                 <div class="blog_meta">                                        
-                                    <span class="author">Posted by : <a href="#">Rahul</a> / </span>
-                                    <span class="post_date"><a href="#">Sep 20, 2019</a></span>
+                                    <span class="author">Posted by : <?php echo $blog_row['author_name'];?></a> / </span>
+                                    <span class="post_date"><?php echo $blog_row['created_at'];?></a></span>
                                 </div>
                                 <div class="blog_desc">
-                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less</p>
+                                    <p><?php echo $blog_row['special_content'];?></p>
                                 </div>
                                 <footer class="readmore_button">
-                                    <a href="blog-details.html">read more</a>
+                                    <a href=<?php echo url("blog-details&id=") . $blog_row['id'];?>>read more</a>
                                 </footer>
                             </figcaption>
                         </figure>
                     </article>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                    <article class="single_blog blog_bidio mb-60">
-                        <figure>
-                            <div class="blog_thumb">
-                                <a href="blog-details.html"><img src="assets/img/blog/blog1.jpg" alt=""></a>
-                            </div>
-                            <figcaption class="blog_content">
-                                <h3><a href="blog-details.html">See the tutorial</a></h3>
-                                <div class="blog_meta">                                        
-                                    <span class="author">Posted by : <a href="#">Rahul</a> / </span>
-                                    <span class="post_date">On : <a href="#">Aug 25, 2019</a></span>
-                                </div>
-                                <div class="blog_desc">
-                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less</p>
-                                </div>
-                                <footer class="readmore_button">
-                                    <a href="blog-details.html">read more</a>
-                                </footer>
-                            </figcaption>
-                        </figure>
-                    </article>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                    <article class="single_blog mb-60">
-                        <figure>
-                            <div class="blog_thumb">
-                                <a href="blog-details.html"><img src="assets/img/blog/blog-details.jpg" alt=""></a>
-                            </div>
-                            <figcaption class="blog_content">
-                                <h3><a href="blog-details.html">How to start drone</a></h3>
-                                <div class="blog_meta">                                        
-                                    <span class="author">Posted by : <a href="#">Rahul</a> / </span>
-                                    <span class="post_date"><a href="#">Sep 20, 2019</a></span>
-                                </div>
-                                <div class="blog_desc">
-                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less</p>
-                                </div>
-                                <footer class="readmore_button">
-                                    <a href="blog-details.html">read more</a>
-                                </footer>
-                            </figcaption>
-                        </figure>
-                    </article>
-                </div>
+                </div>   
+                <?php endwhile;?>
+
             </div>
         </div>
     </section><!--/Blog-->

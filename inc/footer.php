@@ -18,10 +18,10 @@
                         <h3>Information</h3>
                         <div class="footer_menu">
                             <ul>
-                                <li><a href="about.html">About Us</a></li>
-                                <li><a href="blog.html">Delivery Information</a></li>
-                                <li><a href="contact.html">Privacy Policy</a></li>
-                                <li><a href="services.html">Terms & Conditions</a></li>
+                                <li><a href=<?php echo url("about");?>>About Us</a></li>
+                                <li><a href=<?php echo url("blog");?>>Delivery Information</a></li>
+                                <li><a href=<?php echo url("privacy-policy");?>>Privacy Policy</a></li>
+                                <li><a href=<?php echo url("faq");?>>Terms & Conditions</a></li>
                                 <li><a href="#">Returns</a></li>
                                 <li><a href="#">Gift Certificates</a></li>
                             </ul>
@@ -33,7 +33,7 @@
                         <h3>My Account</h3>
                         <div class="footer_menu">
                             <ul>
-                                <li><a href="#">My Account</a></li>
+                                <li><a href=<?php echo url("my-account");?>>My Account</a></li>
                                 <li><a href="#">Order History</a></li>
                                 <li><a href="wishlist.html">Wish List</a></li>
                                 <li><a href="#">Newsletter</a></li>
@@ -48,11 +48,11 @@
                         <h3>Follow Us</h3>
                         <div class="footer_social_link">
                             <ul>
-                                <li><a class="facebook" href="#" title="Facebook"><i class="fa fa-facebook"></i></a></li>
-                                <li><a class="twitter" href="#" title="Twitter"><i class="fa fa-twitter"></i></a></li>
-                                <li><a class="instagram" href="#" title="instagram"><i class="fa fa-instagram"></i></a></li>
-                                <li><a class="linkedin" href="#" title="linkedin"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a class="rss" href="#" title="rss"><i class="fa fa-rss"></i></a></li>
+                                <li><a class="facebook" href="https://www.facebook.com/" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                                <li><a class="twitter" href="https://www.twitter.com/" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                                <li><a class="instagram" href="https://www.instagram.com/" title="instagram"><i class="fa fa-instagram"></i></a></li>
+                                <li><a class="linkedin" href="https://www.linkedin.com/" title="linkedin"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a class="rss" href="https://www.rss.com/" title="rss"><i class="fa fa-rss"></i></a></li>
                             </ul>
                         </div>
                         <div class="subscribe_form">

@@ -4,10 +4,8 @@ require_once Root_Path . 'src/Database.php';
 require_once Root_Path . 'src/Migration.php';
 require_once Root_Path . 'src/functions.php';
 
-if (!isset($_GET["page"])) {
-    $_GET['page'] = "index";
-}
-
+if(isset($_GET["page"]))
+{
 switch ($_GET["page"]) {
     case "index":
         require_once 'views/index.php';
@@ -57,4 +55,9 @@ switch ($_GET["page"]) {
     default:
         require_once 'views/404.php';  // Redirect to a 404 page if the page is not found
         break;
+    }
 }
+else{
+    require_once 'views/index.php';
+}
+?>
