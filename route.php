@@ -1,4 +1,5 @@
 <?php
+session_start();
 $config = require_once 'src/config.php';
 require_once Root_Path . 'src/Database.php';
 require_once Root_Path . 'src/Migration.php';
@@ -21,6 +22,9 @@ switch ($_GET["page"]) {
         break;
     case "blog":
         require_once 'views/blog.php';
+        break;
+    case "blog2":
+        require_once 'views/blog2.php';
         break;
     case "blog-details":
         require_once 'views/blog-details.php';
@@ -51,6 +55,15 @@ switch ($_GET["page"]) {
         break;
     case "404":
         require_once 'views/404.php';
+        break;
+    case "check-register":
+        require_once 'controller/check_register.php';
+        break;
+    case "check-login":
+        require_once 'controller/check_login.php';
+        break ;
+    case "logout":
+        require_once 'controller/logout.php';
         break;
     default:
         require_once 'views/404.php';  // Redirect to a 404 page if the page is not found

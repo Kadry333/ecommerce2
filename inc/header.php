@@ -1,6 +1,12 @@
 <!doctype html>
 <html class="no-js" lang="en">
-
+<?php
+$config = require_once 'src/config.php';
+require_once Root_Path . 'src/DB_Actions/Products.php';
+ $db = new DataBase();
+ $conn = $db->getConnection();
+$product = new Product($conn);
+?>
 <!--   03:20:39 GMT -->
 <head>
     <meta charset="utf-8">
@@ -51,14 +57,7 @@
                                <li><a href="checkout.html"> Checkout </a></li> 
                             </ul>
                         </div> 
-                        <div class="search_container">
-                           <form action="#">
-                                <div class="search_box">
-                                    <input placeholder="Search product..." type="text">
-                                    <button type="submit">Search</button> 
-                                </div>
-                            </form>
-                        </div> 
+               
                         
                         <div class="middel_right_info">
                             <div class="header_wishlist">
@@ -209,19 +208,60 @@
                         </div>
                         <div class="col-lg-9 col-md-6">
                             <div class="middel_right">
-                                <div class="search_container">
-                                   <form action="#">
-                                        <div class="search_box">
-                                            <input placeholder="Search product..." type="text">
-                                            <button type="submit">Search</button> 
-                                        </div>
-                                    </form>
+                            <div class="search_container">
+                           <form method = "GET" action="route.php">
+                                <div class="search_box">
+                                <input type="hidden" name="page" value="index">
+                                    <input name = "search_query" placeholder="Search product..." type="text" value="<?php echo isset($_GET['search_query'])?$_GET['search_query'] : '';?>">
+                                    <button type="submit">Search</button> 
                                 </div>
-                                <div class="middel_right_info">
-                                    <div class="header_wishlist">
-                                        <a href="#"><img src="assets/img/user.png" alt=""></a>
+                            </form>
+                            <?php if(isset($_GET['search_query'])):?>
+                                <?php 
+                                $search_query = mysqli_real_escape_string($conn,$_GET['search_query']);
+                                $sql = "SELECT * FROM `products` WHERE `name` LIKE '%$search_query%'";
+                                $search_res = mysqli_query($conn,$sql);?>
+                                <div class="search_results">
+                                   <h3>Search Results for "<?php echo htmlspecialchars($search_query); ?>"</h3>
+                                   <?php if (mysqli_num_rows($search_res) > 0): ?>
+                         <ul class="result_list">
+                            <?php while ($row = mysqli_fetch_assoc($search_res)): ?>
+                                <li class="result_item">
+                                   <div class="result_thumb">
+                                   <img src="<?php echo Base_Url . "public/images/products/" . $row['image']; ?> " alt="" width = "200" height= "150">
+                                   </div>
+                                   <div class="result_info">
+                                      <h4><a href="<?php echo url('product-details&id=' . $row['id']); ?>"><?php echo $row['name']; ?></a></h4>
+                                      
                                     </div>
-                                    <div class="mini_cart_wrapper">
+                                </li>
+                             <?php endwhile; ?>
+                        </ul>
+                             <?php else: ?>
+                                 <p>No results found for "<?php echo htmlspecialchars($search_query); ?>"</p>
+                            <?php endif; ?>
+        </div>
+                             <?php endif; ?>
+                        </div> 
+                                <div class="middel_right_info">
+                                <?php if (isset($_SESSION['auth']['name'])): ?>
+    <div class="user-info d-flex align-items-center justify-content-center">
+        <img src="assets/img/user.png" alt="Profile Picture" class="img-fluid rounded-circle" >
+        <h4 style="color: white; margin-right: 10px;">
+    <?php echo htmlspecialchars($_SESSION['auth']['name']); ?>
+        </h4>
+        <a href=<?php echo url("logout");?> class="btn btn-danger">Logout</a>
+    </div>
+<?php else: ?>
+    <div class="header_wishlist text-center">
+        <a href="<?php echo url('login'); ?>" class="btn btn-primary">
+            <img src="assets/img/user.png" alt="User Icon" class="img-fluid" style="width: 30px; height: auto;">
+            Login
+        </a>
+    </div>
+<?php endif; ?>    
+
+              <div class="mini_cart_wrapper">
                                         <a href="javascript:void(0)"><img src="assets/img/shopping-bag.png" alt=""></a>
                                         <span class="cart_quantity">2</span>
                                         <!--mini cart-->

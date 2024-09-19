@@ -9,7 +9,7 @@
                 <div class="col-12">
                     <div class="breadcrumb_content">
                         <ul>
-                            <li><a href="index-2.html">home</a></li>
+                            <li><a href=<?php echo url("index");?>>home</a></li>
                             <li>Privacy Policy</li>
                         </ul>
                     </div>
@@ -29,7 +29,7 @@
                     </div>
                     <div class="privacy_content section_1">
                         <h2>Who we are</h2>
-                        <p>Our website address is: <a href="#">drophut.com</a></p>
+                        <p>Our website address is: <a href=<?php echo url("index");?>>drophut.com</a></p>
                     </div>
                     <div class="privacy_content section_2">
                         <h2>What personal data we collect and why we collect it</h2>

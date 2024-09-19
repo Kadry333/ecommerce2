@@ -28,7 +28,7 @@
                         <img src="assets/img/404.jpg" alt=""/>
                         <h2>Opps! PAGE NOT BE FOUND</h2>
                         <p>Contrary to popular belief, Lorem Ipsum is not simply random <br/> text. It has roots in a piece of classical</p>
-                        <a href="index-2.html">Back to home page</a>
+                        <a href=<?php echo url("index");?>>Back to home page</a>
                     </div>
                 </div>
             </div>

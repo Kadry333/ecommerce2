@@ -1,10 +1,10 @@
 <?php require_once Root_Path . 'inc/header.php';?>
 <?php require_once Root_Path . 'inc/nav.php';?>
-<?php require_once Root_Path . 'src/Database.php';?>
 <?php require_once Root_Path . 'src/DB_Actions/Blogs.php';?>
 <?php require_once Root_Path . 'src/DB_Functions.php';?>
-
 <?php
+ $db = new DataBase();
+ $conn = $db->getConnection();
 $blog = new Blog($conn);
 ?>
 
@@ -40,6 +40,8 @@ $blog = new Blog($conn);
                             <?php $blog_res = $blog->readAll();?>
                             <?php $i = 0;?>
                             <?php while ($blog_row = mysqli_fetch_assoc($blog_res)):?>
+                                <?php
+                            if($i<4){$i++;continue;}?>
                             <div class="col-lg-6 col-md-6">
                                 <article class="single_blog mb-60">
                                     <figure>
@@ -62,8 +64,7 @@ $blog = new Blog($conn);
                                     </figure>
                                 </article>
                             </div>
-                            <?php $i++;
-                            if($i==4){break;}?>
+                            
                            <?php endwhile;?>
                            
                             
@@ -74,43 +75,11 @@ $blog = new Blog($conn);
                     <div class="blog_sidebar_widget">
                         <div class="widget_list widget_search">
                             <h3>Search</h3>
-                            <form method = "GET" action ="route.php">
-                            <input type="hidden" name="page" value="blog">
-                                <input name="search_query" placeholder="Search..." type="text" value="<?php echo isset($_GET['search_query'])?$_GET['search_query'] : '';?>">
+                            <form action="#">
+                                <input placeholder="Search..." type="text">
                                 <button type="submit">search</button>
                             </form>
-                            <?php if(isset($_GET['search_query'])):?>
-                            <?php
-                                $search_query = mysqli_real_escape_string($conn, $_GET['search_query']);
-                                $sql = "SELECT * FROM `blogs` WHERE `title` LIKE '%$search_query%'";
-                                $search_res = mysqli_query($conn,$sql);
- 
-                            
-                            ?>
-                            
                         </div>
-                        <?php if(mysqli_num_rows($search_res) > 0):?>
-                        
-                            <div class="widget_list widget_post">
-                            <h3>Search Results</h3>
-                            <?php while($search_row = mysqli_fetch_assoc($search_res)):?>
-                            <div class="post_wrapper">
-                                <div class="post_thumb">
-                                    <a href=<?php echo url("blog-details&id=") . $search_row['id'];?>><img src=<?php echo Base_Url . "public/images/blogs/" .  $search_row['image'];?> alt=""></a>
-                                </div>
-                                <div class="post_info">
-                                    <h3><a href=<?php echo url("blog-details&id=") . $search_row['id'];?>><?php echo $search_row['title'];?></a></h3>
-                                    <span><?php echo $search_row['created_at'];?> </span>
-                                </div>
-                            </div>
-                            <?php endwhile;?>
-                             <?php else:?>
-                                <h3><?php echo "No Result Found";?></h3>
-                                <?php endif;?>
-                             
-                        </div>
-                        <?php else:?>
-                            <h3></h3>
                         <div class="widget_list widget_post">
                             <h3>Recent Posts</h3>
                             <?php $recent_res = select_limit("blogs","DESC","3");?>
@@ -125,11 +94,10 @@ $blog = new Blog($conn);
                                 </div>
                             </div>
                             <?php endwhile;?>
-                             
+                          
                              
                         </div>
-                        <?php endif;?>
-                       
+                        
                     </div>
                 </div>
             </div>
@@ -145,9 +113,9 @@ $blog = new Blog($conn);
                 <div class="col-12">
                     <div class="pagination">
                         <ul>
-                            <li class="current">1</li>
-                            <li><a href=<?php echo url("blog2");?>>2</a></li>
-                            <li class=<?php echo url("blog2");?>><a href=<?php echo url("blog");?>>next</a></li>
+                            <li class="current">2</li>
+                            <li><a href=<?php echo url("blog");?>>1</a></li>
+                            <li class=<?php echo url("blog");?>><a href=<?php echo url("blog");?>>previous</a></li>
                         </ul>
                     </div>
                 </div>

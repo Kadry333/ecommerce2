@@ -11,7 +11,6 @@ $product = new Product($conn);
 $slider = new Slider($conn);
 $blog = new Blog($conn);
 $opinion = new Users_Opinion($conn);
-
 ?>
 
     <!--slider area start-->
@@ -372,6 +371,7 @@ $opinion = new Users_Opinion($conn);
             </div>
             <div class="row blog_wrapper">
                 <?php $blog_res = $blog->readAll();?>
+                <?php $i = 0;?>
                 <?php while($blog_row = mysqli_fetch_assoc($blog_res)):?>
                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                     <article class="single_blog mb-60">
@@ -394,7 +394,9 @@ $opinion = new Users_Opinion($conn);
                             </figcaption>
                         </figure>
                     </article>
-                </div>   
+                </div> 
+                <?php if($i==2){break;}?>
+                <?php $i++;?>  
                 <?php endwhile;?>
 
             </div>

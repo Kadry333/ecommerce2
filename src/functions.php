@@ -10,3 +10,8 @@ function url($path)
     return Base_Url."route.php?page=".$path;
     die;
 }
+function redirect($path)
+{
+    header("Location: " . Base_Url . "route.php?page=".$path);
+    die();
+}

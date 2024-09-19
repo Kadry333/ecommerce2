@@ -69,7 +69,14 @@ CREATE TABLE IF NOT EXISTS users_opinion(
     image VARCHAR(50)
 );
 
-
+CREATE TABLE IF NOT EXISTS contact(
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    message TEXT,
+    user_id int,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
 
 
 CREATE TABLE IF NOT EXISTS settings (

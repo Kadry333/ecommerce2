@@ -1,5 +1,8 @@
 <?php require_once Root_Path . 'inc/header.php';?>
 <?php require_once Root_Path . 'inc/nav.php';?>
+<?php require_once Root_Path.'src/DB_Actions/Contact.php';?>
+
+
 
 
     <!--breadcrumbs area start-->
@@ -33,7 +36,7 @@
                             </div>
                             <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12">
                                 <div class="account-content">
-                                    <form action="#">
+                                    <form action="post">
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="single-acc-field">

@@ -9,7 +9,7 @@
                 <div class="col-12">
                     <div class="breadcrumb_content">
                         <ul>
-                            <li><a href="index-2.html">home</a></li>
+                            <li><a href=<?php echo url("index");?>>home</a></li>
                             <li>Login</li>
                         </ul>
                     </div>
@@ -33,24 +33,30 @@
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                 <div class="account-content">
-                                    <form action="#">
+                                    <form action="<?php echo url("check-login");?>" method="post">
+                                    <?php if(isset($_SESSION['login']) && $_SESSION['login'] == "not found"): ?>
+                                      <div class="alert alert-danger">
+                                                      WRONG EMAIL OR PASSWORD!
+                                      </div>
+                                      <?php elseif(isset($_SESSION['login']) && $_SESSION['login'] == "found"):?>
+                                      <div class="alert alert-success">
+                                      LOGGED IN SUCCESSFULLY
+                                     </div>
+                                      <?php endif;?>
                                         <div class="single-acc-field">
                                             <label for="email">Email</label>
-                                            <input type="email" id="email" placeholder="Enter your Email">
+                                            <input type="email" id="email" name="email" placeholder="Enter your Email">
                                         </div>
                                         <div class="single-acc-field">
                                             <label for="password">Password</label>
-                                            <input type="password" id="password" placeholder="Enter your password">
+                                            <input type="password" id="password" name="password" placeholder="Enter your password">
                                         </div>
-                                        <div class="single-acc-field boxes">
-                                            <input type="checkbox" id="checkbox">
-                                            <label for="checkbox">Remember me</label>
-                                        </div>
+                                        
                                         <div class="single-acc-field">
                                             <button type="submit">Login Account</button>
                                         </div>
-                                        <a href="forget-password.html">Forget Password?</a>
-                                        <a href="register.html">Not Account Yet?</a>
+                                        <a href=<?php echo url("forget-password");?>>Forget Password?</a>
+                                        <a href=<?php echo url("register");?>>Not Account Yet?</a>
                                     </form>
                                 </div>
                             </div>
@@ -60,6 +66,6 @@
 			</div>
 		</div>
 	</section>
-
+    <?php unset($_SESSION['login']);?>
     <?php require_once 'inc/footer.php';?>
    

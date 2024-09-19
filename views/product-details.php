@@ -1,8 +1,7 @@
 <?php require_once Root_Path . 'inc/header.php';?>
 <?php require_once Root_Path . 'inc/nav.php';?>
 <?php require_once Root_Path.'src/DB_Actions/Products.php';?>
-<?php $db  = new DataBase();?>
-<?php $conn = $db->getConnection();?>
+
 <?php $product = new Product($conn);?>
 
     <!--breadcrumbs area start-->

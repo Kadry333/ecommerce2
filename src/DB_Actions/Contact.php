@@ -1,55 +1,52 @@
 <?php
-// Blog.php
-class Blog {
+class Contact {
 
-    private $table_name = "blogs";
+    private $table_name = "contact"; // Table name
 
-    // Blog properties
+    // Contact properties
     public $id;
-    public $title;
-    public $content;
-    public $author_id;
-    public $image;
-    public $author_name;
-    public $special_content;
-    public $created_at;
+    public $name;
+    public $email;
+    public $message;
+    public $user_id; 
+
 
     // Constructor with DB connection
     public function __construct($db) {
         $this->conn = $db; // Assuming $db is a database connection object
     }
 
-    // Create Blog
+    // Create Contact
     public function create() {
         $query = "INSERT INTO " . $this->table_name . "
-            SET title = ?, content = ?, author_id = ?, image = ?, author_name = ?, special_content = ?, created_at = NOW()";
+            SET name = ?, email = ?, message = ?, user_id = ?, created_at = NOW()";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("ssisss", $this->title, $this->content, $this->author_id, $this->image, $this->author_name, $this->special_content);
+        $stmt->bind_param("sssi", $this->name, $this->email, $this->message, $this->user_id);
         return $stmt->execute();
     }
 
-    // Read Single Blog
+    // Read Single Contact
     public function read($id) {
         $query = "SELECT * FROM " . $this->table_name . " WHERE id = '$id'";
         return mysqli_query($this->conn,$query);
     }
 
-    // Read All Blogs
+    // Read All Contacts
     public function readAll() {
         $query = "SELECT * FROM " . $this->table_name;
         return mysqli_query($this->conn, $query);
     }
 
-    // Update Blog
+    // Update Contact
     public function update() {
         $query = "UPDATE " . $this->table_name . "
-            SET title = ?, content = ?, author_id = ?, image = ?, author_name = ?, special_content = ? WHERE id = ?";
+            SET name = ?, email = ?, message = ?, user_id = ? WHERE id = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("ssisssi", $this->title, $this->content, $this->author_id, $this->image, $this->author_name, $this->special_content, $this->id);
+        $stmt->bind_param("sssii", $this->name, $this->email, $this->message, $this->user_id, $this->id);
         return $stmt->execute();
     }
 
-    // Delete Blog
+    // Delete Contact
     public function delete() {
         $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
         $stmt = $this->conn->prepare($query);
