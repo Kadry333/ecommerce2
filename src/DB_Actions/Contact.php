@@ -18,13 +18,11 @@ class Contact {
 
     // Create Contact
     public function create() {
-        $query = "INSERT INTO " . $this->table_name . "
-            SET name = ?, email = ?, message = ?, user_id = ?, created_at = NOW()";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("sssi", $this->name, $this->email, $this->message, $this->user_id);
-        return $stmt->execute();
-    }
+        $query = "INSERT INTO " . $this->table_name . " (name, email, message,user_id) 
+        VALUES ('$this->name', '$this->email', '$this->message','$this->user_id')";
+        return mysqli_query($this->conn, $query);
 
+    }
     // Read Single Contact
     public function read($id) {
         $query = "SELECT * FROM " . $this->table_name . " WHERE id = '$id'";

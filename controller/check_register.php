@@ -34,7 +34,7 @@ if($_SERVER['REQUEST_METHOD']=="POST")
  }
  elseif(maxlen($email,40))
  {
-    $errors['email'] = "Email must be smaller that 400 characters";
+    $errors['email'] = "Email must be smaller that 40 characters";
  }
  $res = $user->check($email);
  if(mysqli_num_rows($res)>=1)

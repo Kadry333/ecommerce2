@@ -18,7 +18,7 @@
         </div>         
     </div>
     <!--breadcrumbs area end-->
-    <span class="text-success" style="font-size: 40px; font-weight: bold; display: block; text-align: center; line-height: 1.5; padding: 10px;">
+                <span class="text-success" style="font-size: 40px; font-weight: bold; display: block; text-align: center; line-height: 1.5; padding: 10px;">
                     <div class="text-center">
                         <?php echo $_SESSION['register'] ?? ''; ?>
                     </div>

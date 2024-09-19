@@ -53,6 +53,9 @@ switch ($_GET["page"]) {
     case "register":
         require_once 'views/register.php';
         break;
+    case "reset-password":
+        require_once 'views/reset-password.php';
+        break;
     case "404":
         require_once 'views/404.php';
         break;
@@ -62,9 +65,18 @@ switch ($_GET["page"]) {
     case "check-login":
         require_once 'controller/check_login.php';
         break ;
+    case "check-contact":
+        require_once 'controller/check_contact.php';
+        break ;
     case "logout":
         require_once 'controller/logout.php';
         break;
+    case "check-reset":
+        require_once 'controller/check_reset.php';
+        break ;
+    case "check-reset-password":
+        require_once 'controller/check_reset_password.php';
+        break ;
     default:
         require_once 'views/404.php';  // Redirect to a 404 page if the page is not found
         break;

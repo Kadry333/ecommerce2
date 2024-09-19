@@ -50,6 +50,12 @@ class Users {
         $stmt->bind_param("sssssi", $this->name, $this->email, $this->password, $this->role, $this->permissions, $this->id);
         return $stmt->execute();
     }
+    public function update_password($email,$password)
+    {
+        $query = "UPDATE " . $this->table_name.
+        " SET `password` = '$password' WHERE `email` = '$email'";
+        return mysqli_query($this->conn,$query);
+    }
 
     // Delete User
     public function delete() {

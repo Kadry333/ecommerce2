@@ -25,20 +25,28 @@
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                 <div class="account-thumb">
-                                    <h2>Forgot password?</h2>
+                                    <h2>Reset password</h2>
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis consectetur similique deleniti pariatur enim cumque eum</p>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                
                                 <div class="account-content">
-                                    <form action="<?php echo url("check-reset");?>" method="post">
+                                     <span class="text-success" style="font-size: 25px; font-weight: bold; display: block; text-align: center; line-height: 1.5; padding: 10px;">
+                                         <div class="text-center">
+                                             <?php if(isset ($_SESSION['reset']) && $_SESSION['reset'] == "success"):?>
+                                                Password Updated successfully
+                                            <?php endif;?>
+                                         </div>
+                                     </span>
+                                    <form action="<?php echo url("check-reset-password");?>" method="post">
                                         <div class="single-acc-field">
-                                            <label for="email">Email</label>
-                                            <input type="email" id="email"name = "email" placeholder="Enter your Email">
-                                            <span class="text-danger"><?php echo $_SESSION['errors']['email'] ?? ''; ?></span>
+                                            <label for="email">Password</label>
+                                            <input type="password" id="password"name = "password" placeholder="Enter New Password">
+                                            <span class="text-danger"><?php echo $_SESSION['errors']['password'] ?? ''; ?></span>
                                         </div>
                                         <div class="single-acc-field">
-                                            <button type="submit">Reset Password</button>
+                                            <button type="submit">Confirm Password</button>
                                         </div>
                                         <a href=<?php echo url("login");?>>Login now</a>
                                     </form>
@@ -51,6 +59,7 @@
 		</div>
 	</section>
     <?php unset($_SESSION['errors']);?>
+    <?php unset($_SESSION['reset']);?>
     <!--footer area start-->
     <?php require_once Root_Path . 'inc/footer.php';?>
     <!--footer area end-->
