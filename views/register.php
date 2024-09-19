@@ -1,5 +1,11 @@
+<?php if(isset($_SESSION['auth']))
+{
+    redirect("index");
+}
+?>
 <?php require_once Root_Path . 'inc/header.php';?>
 <?php require_once Root_Path . 'inc/nav.php';?>
+
 
 
     <!--breadcrumbs area start-->

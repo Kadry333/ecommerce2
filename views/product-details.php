@@ -25,6 +25,13 @@
     if(isset($_GET['id'])){$id = $_GET['id'];}
     else{ $id = rand(1,6);}
     ?>
+    <?php if(isset($_SESSION['cart']) && $_SESSION['cart'] == "added"):?>
+         <span class="text-success" style="font-size: 40px; font-weight: bold; display: block; text-align: center; line-height: 1.5; padding: 10px;">
+             <div class="text-center">
+                 Product Added
+             </div> 
+         </span>
+    <?php endif;?>
     <!--product details start-->
     <div class="product_details mt-60 mb-60">
         <div class="container">
@@ -66,11 +73,11 @@
                         </div>
                     </div>
                 </div>
+            
                 <?php $prod_res = $product->read($id)?>
                 <?php $prod_row = mysqli_fetch_assoc($prod_res)?>
                 <div class="col-lg-6 col-md-6">
                     <div class="product_d_right">
-                       <form action="#">
                            
                             <h1><?php echo $prod_row['name'];?></h1>
                             <div class=" product_ratting">
@@ -97,17 +104,14 @@
 							<div class="product_timing">
                                 <div data-countdown="2025/12/15"></div>
                             </div>
-                          
+
                             <div class="product_variant quantity">
-                                <label>quantity</label>
-                                <input min="1" max="100" value="1" type="number">
-                                <button class="button" type="submit">add to cart</button>  
-                                
+                            <button class="button" onclick="window.location.href='<?php echo url('add-to-cart&id=').$prod_row['id'];?>';">Add to Cart</button>
                             </div>
+                        
                             <div class=" product_d_action">
                                <ul>
                                    <li><a href="#" title="Add to wishlist">+ Add to Wishlist</a></li>
-                                   <li><a href="#" title="Add to wishlist">+ Compare</a></li>
                                </ul>
                             </div>
                            
@@ -184,7 +188,7 @@
     </div>  
     <!--product info end-->
 
-
+<?php unset($_SESSION['cart']);?>
     <!--footer area start-->
     <?php require_once Root_Path . 'inc/footer.php';?>
     <!--footer area end-->

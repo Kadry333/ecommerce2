@@ -4,6 +4,7 @@ $config = require_once 'src/config.php';
 require_once Root_Path . 'src/Database.php';
 require_once Root_Path . 'src/Migration.php';
 require_once Root_Path . 'src/functions.php';
+require_once Root_Path . 'src/DB_Functions.php';
 
 if(isset($_GET["page"]))
 {
@@ -76,6 +77,12 @@ switch ($_GET["page"]) {
         break ;
     case "check-reset-password":
         require_once 'controller/check_reset_password.php';
+        break;
+    case "add-to-cart":
+        require_once 'controller/cart/add_to_cart.php';
+        break ;
+    case "cart-remove":
+        require_once 'controller/cart/cart_remove.php';
         break ;
     default:
         require_once 'views/404.php';  // Redirect to a 404 page if the page is not found

@@ -3,9 +3,11 @@
 <?php
 $config = require_once 'src/config.php';
 require_once Root_Path . 'src/DB_Actions/Products.php';
+require_once Root_Path . 'src/DB_Actions/Cart.php';
  $db = new DataBase();
  $conn = $db->getConnection();
 $product = new Product($conn);
+$cart = new Cart($conn);
 ?>
 <!--   03:20:39 GMT -->
 <head>
@@ -262,51 +264,36 @@ $product = new Product($conn);
 <?php endif; ?>    
 
               <div class="mini_cart_wrapper">
+                                        <?php $cart_res = $cart->readAll();?>
+                                        <?php $cart_num = mysqli_num_rows($cart_res);?>
+
                                         <a href="javascript:void(0)"><img src="assets/img/shopping-bag.png" alt=""></a>
-                                        <span class="cart_quantity">2</span>
+                                        <span class="cart_quantity"><?php echo $cart_num;?></span>
                                         <!--mini cart-->
                                          <div class="mini_cart">
+                                            <?php while($cart_row = mysqli_fetch_assoc($cart_res)):?>
                                             <div class="cart_item">
                                                <div class="cart_img">
-                                                   <a href="#"><img src="assets/img/s-product/product.jpg" alt=""></a>
+                                                   <a href=<?php echo url("product-details&id=").$cart_row['id'];?>><img src=<?php echo Base_Url . "public/images/products/" . $cart_row['image'];?> alt=""></a>
                                                </div>
                                                 <div class="cart_info">
-                                                    <a href="#">Sit voluptatem rhoncus sem lectus</a>
-                                                    <p>Qty: 1 X <span> $60.00 </span></p>    
+                                                    <a href=<?php echo url("product-details&id=").$cart_row['id'];?>><?php echo $cart_row['products'];?></a>
+                                                    <p>Qty: 1 X <span> $<?php echo $cart_row['price'];?> </span></p>    
                                                 </div>
                                                 <div class="cart_remove">
-                                                    <a href="#"><i class="ion-android-close"></i></a>
+                                                    <a href=<?php echo url("cart-remove&id=").$cart_row['id'];?>><i class="ion-android-close"></i></a>
                                                 </div>
                                             </div>
-                                            <div class="cart_item">
-                                               <div class="cart_img">
-                                                   <a href="#"><img src="assets/img/s-product/product2.jpg" alt=""></a>
-                                               </div>
-                                                <div class="cart_info">
-                                                    <a href="#">Natus erro at congue massa commodo</a>
-                                                    <p>Qty: 1 X <span> $60.00 </span></p>   
-                                                </div>
-                                                <div class="cart_remove">
-                                                    <a href="#"><i class="ion-android-close"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="mini_cart_table">
-                                                <div class="cart_total">
-                                                    <span>Sub total:</span>
-                                                    <span class="price">$138.00</span>
-                                                </div>
-                                                <div class="cart_total mt-10">
-                                                    <span>total:</span>
-                                                    <span class="price">$138.00</span>
-                                                </div>
-                                            </div>
+                                            <?php endwhile;?>
+                                            
+                                          
 
                                             <div class="mini_cart_footer">
                                                <div class="cart_button">
-                                                    <a href="cart.html">View cart</a>
+                                                    <a href=<?php echo url("cart");?>>View cart</a>
                                                 </div>
                                                 <div class="cart_button">
-                                                    <a href="checkout.html">Checkout</a>
+                                                    <a href=<?php echo url("checkout");?>>Checkout</a>
                                                 </div>
 
                                             </div>

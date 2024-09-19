@@ -5,34 +5,35 @@ require_once 'src/DB_Actions/Users.php';
 $db = new DataBase();
 $conn = $db->getConnection();
 $user = new Users($conn);
+$validate = new Validation();
 if($_SERVER['REQUEST_METHOD']=="POST")
 {
- $name = sanitize($_POST['name']);
- $email = sanitize($_POST['email']);
- $password = sanitize($_POST['password']);
+ $name = $validate->sanitize($_POST['name']);
+ $email = $validate->sanitize($_POST['email']);
+ $password = $validate->sanitize($_POST['password']);
  //name validation
- if(check_empty($name))
+ if($validate->check_empty($name))
  {
     $errors['name'] = "Name is required";
  }
- elseif(minlen($name,3))
+ elseif($validate->minlen($name,3))
  {
     $errors['name'] = "Name must be longer than 3 characters";
  }
- elseif(maxlen($name,20))
+ elseif($validate->maxlen($name,20))
  {
     $errors['name'] = "Name must be smaller that 20 characters";
  }
  //email validation
- if(check_empty($email))
+ if($validate->check_empty($email))
  {
     $errors["email"] = "Email is required";
  }
- elseif(minlen($email,6))
+ elseif($validate->minlen($email,6))
  {
     $errors['email'] = "Email must be longer than 6 characters";
  }
- elseif(maxlen($email,40))
+ elseif($validate->maxlen($email,40))
  {
     $errors['email'] = "Email must be smaller that 40 characters";
  }
@@ -42,15 +43,15 @@ if($_SERVER['REQUEST_METHOD']=="POST")
     $errors['email'] = "Email already exists";
  }
  //password validation
- if(check_empty($password))
+ if($validate->check_empty($password))
  {
     $errors['password'] = "Password is required";
  }
- elseif(minlen($password,5))
+ elseif($validate->minlen($password,5))
  {
     $errors['password'] = "Password must be longer than 5 characters";
  }
- elseif(maxlen($password,20))
+ elseif($validate->maxlen($password,20))
  {
     $errors['password'] = "Password must be smaller that 20 characters";
  }

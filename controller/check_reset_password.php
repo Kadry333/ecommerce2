@@ -3,15 +3,16 @@ require_once 'validations.php';
 require_once 'src/DB_Actions/Users.php';
 $password = $_POST['password'];
 $email = $_SESSION['email'];
-if(check_empty($password))
+$validate = new Validation();
+if($validate->check_empty($password))
 {
    $errors['password'] = "Password is required";
 }
-elseif(minlen($password,5))
+elseif($validate->minlen($password,5))
 {
    $errors['password'] = "Password must be longer than 5 characters";
 }
-elseif(maxlen($password,20))
+elseif($validate->maxlen($password,20))
 {
    $errors['password'] = "Password must be smaller that 20 characters";
 }

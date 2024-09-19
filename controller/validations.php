@@ -1,9 +1,11 @@
 <?php 
-function sanitize($input)
+class Validation
+{
+public function sanitize($input)
 {
     return trim(htmlspecialchars($input));
 }
-function check_empty($input)
+public function check_empty($input)
 {
     if(empty($input))
     {
@@ -11,7 +13,7 @@ function check_empty($input)
     }
     return false;
 }
-function minlen($input,$len)
+public function minlen($input,$len)
 {
     if(strlen($input)<$len)
     {
@@ -19,7 +21,7 @@ function minlen($input,$len)
     }
     return false;
 }
-function maxlen($input,$len)
+public function maxlen($input,$len)
 {
     if(strlen($input)>$len)
     {
@@ -27,7 +29,8 @@ function maxlen($input,$len)
     }
     return false;
 }
-function number($input)
+public function number($input)
 {
     return !is_numeric($input);
+}
 }

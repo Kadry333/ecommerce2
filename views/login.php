@@ -1,3 +1,8 @@
+<?php if(isset($_SESSION['auth']))
+{
+    redirect("index");
+}
+?>
 <?php require_once 'inc/header.php';?>
 <?php require_once 'inc/nav.php';?>
     <!--header area end-->

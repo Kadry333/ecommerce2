@@ -6,26 +6,27 @@ require_once 'src/DB_Actions/Contact.php';
 $db = new DataBase();
 $conn = $db->getConnection();
 $user = new Users($conn);
+$validate = new Validation();
 if($_SERVER['REQUEST_METHOD']=="POST")
 {
- $name = sanitize($_POST['name']);
- $email = sanitize($_POST['email']);
- $message = sanitize($_POST['message']);
+ $name = $validate->sanitize($_POST['name']);
+ $email = $validate->sanitize($_POST['email']);
+ $message = $validate->sanitize($_POST['message']);
  //name validation
- if(check_empty($name))
+ if($validate->check_empty($name))
  {
     $errors['name'] = "Name is required";
  }
- elseif(minlen($name,3))
+ elseif($validate->minlen($name,3))
  {
     $errors['name'] = "Name must be longer than 3 characters";
  }
- elseif(maxlen($name,20))
+ elseif($validate->maxlen($name,20))
  {
     $errors['name'] = "Name must be smaller that 20 characters";
  }
  //email validation
- if(check_empty($email))
+ if($validate->check_empty($email))
  {
     $errors["email"] = "Email is required";
  }
@@ -36,15 +37,15 @@ if($_SERVER['REQUEST_METHOD']=="POST")
     $errors['email'] = "Email does not exists";
  }
 //message validate
-if(check_empty($message))
+if($validate->check_empty($message))
 {
    $errors["message"] = "Message is required";
 }
-elseif(minlen($message,6))
+elseif($validate->minlen($message,6))
 {
    $errors['message'] = "Message must be longer than 6 characters";
 }
-elseif(maxlen($message,500))
+elseif($validate->maxlen($message,500))
 {
    $errors['message'] = "Message must be smaller that 500 characters";
 }

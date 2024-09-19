@@ -1,5 +1,22 @@
 <?php require_once Root_Path . 'inc/header.php';?>
 <?php require_once Root_Path . 'inc/nav.php';?>
+<?php require_once 'src/DB_Actions/Cart.php';?>
+<?php 
+$db = new DataBase();
+$conn = $db->getConnection();
+$cart = new Cart($conn);
+$sale = 0;
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['coupon_code']))
+{
+    if($_POST['coupon_code'] == "EraaSoft")
+    {
+        $sale = 20 / 100;
+        $_POST['coupon_code'] = "saled";
+    }
+}
+
+ ?>
+
 
     <!--breadcrumbs area start-->
     <div class="breadcrumbs_area">
@@ -8,7 +25,7 @@
                 <div class="col-12">
                     <div class="breadcrumb_content">
                         <ul>
-                            <li><a href="index-2.html">home</a></li>
+                            <li><a href=<?php echo url("index");?>>home</a></li>
                             <li>Cart</li>
                         </ul>
                     </div>
@@ -21,83 +38,87 @@
     <!--shopping cart area start -->
     <div class="shopping_cart_area mt-60">
         <div class="container">  
-            <form action="#"> 
+            
                 <div class="row">
                     <div class="col-12">
                         <div class="table_desc">
                             <div class="cart_page table-responsive">
+                                <?php if(isset($_SESSION['cart']) && $_SESSION['cart'] == "deleted"):?>
+                                    <span class="text-danger" style="font-size: 40px; font-weight: bold; display: block; text-align: center; line-height: 1.5; padding: 10px;">
+                                      <div class="text-center">
+                                         Product Deleted
+                                      </div>
+                                    </span>
+                                <?php endif;?>
                                 <table>
                             <thead>
                                 <tr>
                                     <th class="product_thumb">Image</th>
                                     <th class="product_name">Product</th>
                                     <th class="product-price">Price</th>
-                                    <th class="product_quantity">Quantity</th>
-                                    <th class="product_total">Total</th>
                                     <th class="product_remove">Remove</th>
                                 </tr>
                             </thead>
+                            <?php $total = 0;?>
                             <tbody>
+                                <?php $cart_res = $cart->readAll();?>
+                                <?php while($cart_row = mysqli_fetch_assoc($cart_res)):?>
                                 <tr>
-                                    <td class="product_thumb"><a href="#"><img src="assets/img/s-product/product.jpg" alt=""></a></td>
-                                    <td class="product_name"><a href="#">Handbag fringilla</a></td>
-                                    <td class="product-price">$65.00</td>
-                                    <td class="product_quantity"><label>Quantity</label> <input min="1" max="100" value="1" type="number"></td>
-                                    <td class="product_total">$130.00</td>
-									<td class="product_remove"><a href="#"><i class="ion-android-close"></i></a></td>
+                                    <td class="product_thumb"> <img src=<?php echo Base_Url . "public/images/products/" . $cart_row['image'];?> alt=""></td>
+                                    <td class="product_name"><?php echo $cart_row['products'];?></td>
+                                    <td class="product-price">$<?php echo $cart_row['price'];?></td>
+									<td class="product_remove"><a href=<?php echo url("cart-remove&id=").$cart_row['id'];?>><i class="ion-android-close"></i></a></td>
                                 </tr>
+                                <?php $total += $cart_row['price'];?>
+                                <?php endwhile;?>
 
-                                <tr>
-                                    <td class="product_thumb"><a href="#"><img src="assets/img/s-product/product2.jpg" alt=""></a></td>
-                                    <td class="product_name"><a href="#">Handbags justo</a></td>
-                                    <td class="product-price">$90.00</td>
-                                    <td class="product_quantity"><label>Quantity</label> <input min="1" max="100" value="1" type="number"></td>
-                                    <td class="product_total">$180.00</td>
-									<td class="product_remove"><a href="#"><i class="ion-android-close"></i></a></td>
-                                </tr>
+                              
 
                             </tbody>
                         </table>   
                             </div>  
-                            <div class="cart_submit">
-                                <button type="submit">update cart</button>
-                            </div>      
+                                 
                         </div>
                     </div>
                 </div>
                 <!--coupon code area start-->
+                <?php if(!isset($_POST['coupon_code'])):?>
                 <div class="coupon_area">
                     <div class="row">
-                        <div class="col-lg-6 col-md-6">
-                            <div class="coupon_code left">
-                                <h3>Coupon</h3>
-                                <div class="coupon_inner">   
-                                    <p>Enter your coupon code if you have one.</p>                                
-                                    <input placeholder="Coupon code" type="text">
-                                    <button type="submit">Apply coupon</button>
-                                </div>    
-                            </div>
-                        </div>
+                    <div class="col-lg-6 col-md-6">
+                      <div class="coupon_code left">
+                       <h3>Coupon</h3>
+                       <div class="coupon_inner">
+                         <p>Enter your coupon code if you have one.</p>
+                         <form method="post" action="<?php echo url('cart'); ?>"> <!-- POST request to cart page -->
+                           <input name="coupon_code" placeholder="Coupon code" type="text" required>
+                           <button type="submit">Apply coupon</button>
+                         </form>
+                    </div>
+                </div>
+                <?php endif;?>
+</div>
+
                         <div class="col-lg-6 col-md-6">
                             <div class="coupon_code right">
                                 <h3>Cart Totals</h3>
                                 <div class="coupon_inner">
                                 <div class="cart_subtotal">
                                     <p>Subtotal</p>
-                                    <p class="cart_amount">$215.00</p>
+                                    <p class="cart_amount">$<?php echo $total*=(1-$sale);?></p>
                                 </div>
                                 <div class="cart_subtotal ">
                                     <p>Shipping</p>
-                                    <p class="cart_amount"><span>Flat Rate:</span> $255.00</p>
+                                    <p class="cart_amount"><span>Flat Rate:</span> $30</p>
                                 </div>
                                 <a href="#">Calculate shipping</a>
 
                                 <div class="cart_subtotal">
                                     <p>Total</p>
-                                    <p class="cart_amount">$215.00</p>
+                                    <p class="cart_amount">$<?php echo $total + 30;?></p>
                                 </div>
                                 <div class="checkout_btn">
-                                    <a href="#">Proceed to Checkout</a>
+                                    <a href=<?php echo url("checkout");?>>Proceed to Checkout</a>
                                 </div>
                                 </div>
                             </div>
@@ -109,7 +130,7 @@
         </div>     
     </div>
     <!--shopping cart area end -->
-        
+        <?php unset($_SESSION['cart']);?>
 
     <!--footer area start-->
     <?php require_once Root_Path . 'inc/footer.php';?>
