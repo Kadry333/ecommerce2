@@ -1,13 +1,12 @@
 <?php
-class Cart {
+class Order_Product {
 
-    private $table_name = "cart"; // Table name for the cart items
+    private $table_name = "order_product"; // Table name for order-product items
 
-    // Cart properties
+    // OrderProduct properties
     public $id;
-    public $product;
-    public $price;
-    public $image;
+    public $order_id;
+    public $product_name;
     public $user_id;
 
     // Constructor with DB connection
@@ -15,43 +14,41 @@ class Cart {
         $this->conn = $db; // Assuming $db is a database connection object
     }
 
-    // Create Cart Item
+    // Create OrderProduct Entry
     public function create() {
-        $query = "INSERT INTO " . $this->table_name . " (products, price, image, user_id) 
-                  VALUES ('$this->product', '$this->price',  '$this->image', '$this->user_id')";
+        $query = "INSERT INTO " . $this->table_name . " (order_id, product_name, user_id) 
+                  VALUES ('$this->order_id', '$this->product_name', '$this->user_id')";
         return mysqli_query($this->conn, $query);
     }
 
-    // Read Single Cart Item
+    // Read Single OrderProduct Entry
     public function read($id) {
         $query = "SELECT * FROM " . $this->table_name . " WHERE id = '$id'";
         return mysqli_query($this->conn, $query);
     }
 
-    // Read All Cart Items for a User
+    // Read All OrderProduct Entries for a User or Order
     public function readAll() {
         $query = "SELECT * FROM " . $this->table_name;
+       
+        
         return mysqli_query($this->conn, $query);
     }
 
-    // Update Cart Item
+    // Update OrderProduct Entry
     public function update() {
         $query = "UPDATE " . $this->table_name . "
-                  SET product = ?, price = ?,  image = ?, user_id = ? 
+                  SET order_id = ?, product_id = ?, user_id = ? 
                   WHERE id = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("sdsii", $this->product, $this->price, $this->total, $this->image, $this->user_id, $this->id);
+        $stmt->bind_param("iiii", $this->order_id, $this->product_id, $this->user_id, $this->id);
         return $stmt->execute();
     }
 
-    // Delete Cart Item
+    // Delete OrderProduct Entry
     public function delete($id) {
         $query = "DELETE FROM " . $this->table_name . " WHERE id = '$id'";
-        return mysqli_query($this->conn,$query);
-    }
-    public function delete_all() {
-        $query = "DELETE FROM " . $this->table_name;
-        return mysqli_query($this->conn,$query);
+        return mysqli_query($this->conn, $query);
     }
 }
 ?>

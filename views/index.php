@@ -28,7 +28,7 @@ $opinion = new Users_Opinion($conn);
                                 <h1><?php echo $slider_row['title'];?></h1>
                                 <h2><?php echo $slider_row['description'];?></h2>
                                 <p><?php echo $slider_row['link'];?></p>
-                                <a class="button" href="product-details.html">Buy now</a>
+                                <a class="button" href=<?php echo url("product-details");?>>Buy now</a>
                             </div>
                         </div>
                         <div class="col-xl-6 col-md-6">
@@ -147,7 +147,7 @@ $opinion = new Users_Opinion($conn);
                             <li>If you are going to use a</li>
                             <li>Alteration in some form, by injected</li>
                         </ul>
-                        <a href="#">$70 Buy now</a>
+                        <a href=<?php echo url("product-details");?>>$70 Buy now</a>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 order-lg-3 order-md-4 order-sm-4 order-4">
@@ -162,7 +162,7 @@ $opinion = new Users_Opinion($conn);
                             <li>If you are going to use a</li>
                             <li>Alteration in some form, by injected</li>
                         </ul>
-                        <a href="#">$70 Buy now</a>
+                        <a href=<?php echo url("product-details");?>>$70 Buy now</a>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 order-lg-4 order-md-3 order-sm-3 order-3">
@@ -250,18 +250,8 @@ $opinion = new Users_Opinion($conn);
                             <div class="product_timing">
                                 <div data-countdown="2025/6/28"></div>
                             </div>
-                            <div class="product_variant quantity">
-                                <label>quantity</label>
-                                <input min="1" max="100" value="1" type="number">
-                                <button class="button" type="submit">add to cart</button>  
-                                
-                            </div>
-                            <div class=" product_d_action">
-                               <ul>
-                                   <li><a href="#" title="Add to wishlist">+ Add to Wishlist</a></li>
-                                   <li><a href="#" title="Add to wishlist">+ Compare</a></li>
-                               </ul>
-                            </div>
+                          
+                          
                           
                             
                             

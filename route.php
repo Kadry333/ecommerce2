@@ -84,6 +84,15 @@ switch ($_GET["page"]) {
     case "cart-remove":
         require_once 'controller/cart/cart_remove.php';
         break ;
+    case "check-checkout":
+        require_once 'controller/cart/check_checkout.php';
+        break ;
+    case "save-order":
+        require_once 'controller/cart/save-order.php';
+        break ;
+    case "tracking":
+        require_once 'views/tracking.php';
+        break;
     default:
         require_once 'views/404.php';  // Redirect to a 404 page if the page is not found
         break;

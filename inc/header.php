@@ -274,10 +274,10 @@ $cart = new Cart($conn);
                                             <?php while($cart_row = mysqli_fetch_assoc($cart_res)):?>
                                             <div class="cart_item">
                                                <div class="cart_img">
-                                                   <a href=<?php echo url("product-details&id=").$cart_row['id'];?>><img src=<?php echo Base_Url . "public/images/products/" . $cart_row['image'];?> alt=""></a>
+                                                   <img src=<?php echo Base_Url . "public/images/products/" . $cart_row['image'];?> alt=""></a>
                                                </div>
                                                 <div class="cart_info">
-                                                    <a href=<?php echo url("product-details&id=").$cart_row['id'];?>><?php echo $cart_row['products'];?></a>
+                                                    <?php echo $cart_row['products'];?></a>
                                                     <p>Qty: 1 X <span> $<?php echo $cart_row['price'];?> </span></p>    
                                                 </div>
                                                 <div class="cart_remove">

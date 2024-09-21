@@ -19,12 +19,7 @@
                         <div class="footer_menu">
                             <ul>
                                 <li><a href=<?php echo url("about");?>>About Us</a></li>
-                                <li><a href=<?php echo url("blog");?>>Delivery Information</a></li>
-                                <li><a href=<?php echo url("privacy-policy");?>>Privacy Policy</a></li>
-                                <li><a href=<?php echo url("faq");?>>Terms & Conditions</a></li>
-                                <li><a href="#">Returns</a></li>
-                                <li><a href="#">Gift Certificates</a></li>
-                            </ul>
+                                <li><a href=<?php echo url("privacy-policy");?>>Privacy Policy</a></li>                            </ul>
                         </div>
                     </div>
                 </div>
@@ -33,12 +28,8 @@
                         <h3>My Account</h3>
                         <div class="footer_menu">
                             <ul>
-                                <li><a href=<?php echo url("my-account");?>>My Account</a></li>
-                                <li><a href="#">Order History</a></li>
-                                <li><a href="wishlist.html">Wish List</a></li>
-                                <li><a href="#">Newsletter</a></li>
-                                <li><a href="#">Affiliate</a></li>
-                                <li><a href="faq.html">International Orders</a></li>
+                                <li><a href=<?php echo url("tracking");?>>Order History</a></li>
+                                <li><a href=<?php echo url("faq");?>>International Orders</a></li>
                             </ul>
                         </div>
                     </div>
@@ -55,19 +46,7 @@
                                 <li><a class="rss" href="https://www.rss.com/" title="rss"><i class="fa fa-rss"></i></a></li>
                             </ul>
                         </div>
-                        <div class="subscribe_form">
-                            <h3>Join Our Newsletter Now</h3>
-                            <form id="mc-form" class="mc-form footer-newsletter" >
-                                <input id="mc-email" type="email" autocomplete="off" placeholder="Your email address..." />
-                                <button id="mc-submit">Subscribe!</button>
-                            </form>
-                            <!-- mailchimp-alerts Start -->
-                            <div class="mailchimp-alerts text-centre">
-                                <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
-                                <div class="mailchimp-success"></div><!-- mailchimp-success end -->
-                                <div class="mailchimp-error"></div><!-- mailchimp-error end -->
-                            </div><!-- mailchimp-alerts end -->
-                        </div>
+                        
                     </div>
                 </div>
             </div>

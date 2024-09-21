@@ -33,6 +33,16 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['coupon_code']))
             </div>
         </div>         
     </div>
+    <?php $cart_res = $cart->readAll();?>
+    <?php if(mysqli_num_rows($cart_res) == 0):?>
+    <span class="text-success" style="font-size: 40px; font-weight: bold; display: block; text-align: center; line-height: 1.5; padding: 10px;">
+    <div class="text-center">
+       Cart Is Empty
+       
+    </div>
+  </span>
+  <?php die();?>
+<?php else:?>
     <!--breadcrumbs area end-->
 
     <!--shopping cart area start -->
@@ -43,7 +53,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['coupon_code']))
                     <div class="col-12">
                         <div class="table_desc">
                             <div class="cart_page table-responsive">
-                                <?php if(isset($_SESSION['cart']) && $_SESSION['cart'] == "deleted"):?>
+                                <?php if(isset($_SESSION['cart_status']) && $_SESSION['cart_status'] == "deleted"):?>
                                     <span class="text-danger" style="font-size: 40px; font-weight: bold; display: block; text-align: center; line-height: 1.5; padding: 10px;">
                                       <div class="text-center">
                                          Product Deleted
@@ -61,7 +71,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['coupon_code']))
                             </thead>
                             <?php $total = 0;?>
                             <tbody>
-                                <?php $cart_res = $cart->readAll();?>
                                 <?php while($cart_row = mysqli_fetch_assoc($cart_res)):?>
                                 <tr>
                                     <td class="product_thumb"> <img src=<?php echo Base_Url . "public/images/products/" . $cart_row['image'];?> alt=""></td>
@@ -105,6 +114,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['coupon_code']))
                                 <div class="coupon_inner">
                                 <div class="cart_subtotal">
                                     <p>Subtotal</p>
+                                    <?php $total = sum_price("cart");?>
                                     <p class="cart_amount">$<?php echo $total*=(1-$sale);?></p>
                                 </div>
                                 <div class="cart_subtotal ">
@@ -116,6 +126,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['coupon_code']))
                                 <div class="cart_subtotal">
                                     <p>Total</p>
                                     <p class="cart_amount">$<?php echo $total + 30;?></p>
+                                    <?php $_SESSION['total'] = $total;?>
                                 </div>
                                 <div class="checkout_btn">
                                     <a href=<?php echo url("checkout");?>>Proceed to Checkout</a>
@@ -130,7 +141,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['coupon_code']))
         </div>     
     </div>
     <!--shopping cart area end -->
-        <?php unset($_SESSION['cart']);?>
-
+        <?php unset($_SESSION['cart_status']);?>
+<?php endif;?>
     <!--footer area start-->
     <?php require_once Root_Path . 'inc/footer.php';?>

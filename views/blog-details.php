@@ -23,7 +23,7 @@ $blog_row = mysqli_fetch_assoc($blog_res);
                 <div class="col-12">
                     <div class="breadcrumb_content">
                         <ul>
-                            <li><a href="index-2.html">home</a></li>
+                            <li><a href=<?php echo url("index");?>>home</a></li>
                             <li>Blog Details</li>
                         </ul>
                     </div>
@@ -63,12 +63,7 @@ $blog_row = mysqli_fetch_assoc($blog_res);
 
                                     </div>
                                     <div class="entry_content">
-                                        <div class="post_meta">
-                                            <span>Tags: </span>
-                                            <span><a href="#">Drone, </a></span>
-                                            <span><a href="#">Sky, </a></span>
-                                            <span><a href="#">Fly</a></span>
-                                        </div>
+                                        
 
                                         <div class="social_sharing">
                                             <p>share this post:</p>
@@ -84,81 +79,8 @@ $blog_row = mysqli_fetch_assoc($blog_res);
                                </figcaption>
                             </figure>
                         </article>
-                        <div class="comments_box">
-                            <h3>3 Comments	</h3>
-                            <div class="comment_list">
-                                <div class="comment_thumb">
-                                    <img src="assets/img/blog/comment3.png.jpg" alt="">
-                                </div>
-                                <div class="comment_content">
-                                    <div class="comment_meta">
-                                        <h5><a href="#">Admin</a></h5>
-                                        <span>October 16, 2018 at 1:38 am</span> 
-                                    </div>
-                                    <p>But I must explain to you how all this mistaken idea of denouncing pleasure</p>
-                                    <div class="comment_reply">
-                                        <a href="#">Reply</a>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="comment_list list_two">
-                                <div class="comment_thumb">
-                                    <img src="assets/img/blog/comment3.png.jpg" alt="">
-                                </div>
-                                <div class="comment_content">
-                                    <div class="comment_meta">
-                                        <h5><a href="#">Demo</a></h5>
-                                        <span>October 16, 2018 at 1:38 am</span> 
-                                    </div>
-                                    <p>Quisque semper nunc vitae erat pellentesque, ac placerat arcu consectetur</p>
-                                    <div class="comment_reply">
-                                        <a href="#">Reply</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comment_list">
-                                <div class="comment_thumb">
-                                    <img src="assets/img/blog/comment3.png.jpg" alt="">
-                                </div>
-                                <div class="comment_content">
-                                    <div class="comment_meta">
-                                        <h5><a href="#">Admin</a></h5>
-                                        <span>October 16, 2018 at 1:38 am</span> 
-                                    </div>
-                                    <p>Quisque orci nibh, porta vitae sagittis sit amet, vehicula vel mauris. Aenean at</p>
-                                    <div class="comment_reply">
-                                        <a href="#">Reply</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comments_form">
-                            <h3>Leave a Reply </h3>
-                            <p>Your email address will not be published. Required fields are marked *</p>
-                            <form action="#">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <label for="review_comment">Comment </label>
-                                        <textarea name="comment" id="review_comment" ></textarea>
-                                    </div> 
-                                    <div class="col-lg-4 col-md-4">
-                                        <label for="author">Name</label>
-                                        <input id="author"  type="text">
-
-                                    </div> 
-                                    <div class="col-lg-4 col-md-4">
-                                        <label for="email">Email </label>
-                                        <input id="email"  type="text">
-                                    </div>
-                                    <div class="col-lg-4 col-md-4">
-                                        <label for="website">Website </label>
-                                        <input id="website"  type="text">
-                                    </div>   
-                                </div>
-                                <button class="button" type="submit">Post Comment</button>
-                             </form>    
-                        </div>
+                      
+                       
                          
                     </div>
                     <!--blog grid area start-->

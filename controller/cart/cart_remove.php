@@ -7,6 +7,6 @@ $id = $_GET['id'];
 $res = $cart->delete($id);
 if($res)
 {
-    $_SESSION['cart'] = "deleted";
+    $_SESSION['cart_status'] = "deleted";
 }
 redirect("cart");

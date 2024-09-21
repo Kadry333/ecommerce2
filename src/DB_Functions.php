@@ -16,3 +16,16 @@ function getrow($table,$id)
     $res = mysqli_query($conn,$query);
     return mysqli_fetch_assoc($res);
 }
+function sum_price($table)
+{
+    global $conn;
+    $query = "SELECT SUM(price) AS total FROM `$table`";
+    $res = mysqli_query($conn,$query);
+    $row = mysqli_fetch_assoc($res);
+    
+    return $row['total'];
+}
+function last_id($table)
+{
+    
+}
